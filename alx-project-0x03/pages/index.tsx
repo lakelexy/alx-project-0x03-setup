@@ -1,45 +1,47 @@
-import Image from "next/image";
-import Layout from "@/components/layouts/Layout";
+import Button from "@/components/common/Button";
+import { useRouter } from "next/router";
 
-const Home = () => {
+interface PageRouteProps {
+  pageRoute: string;
+}
+
+export default function Home() {
+  const router = useRouter();
+
+  // Imperative routing with useRouter
+  const routeToNextPage = ({ pageRoute }: PageRouteProps) => {
+    router.push(pageRoute, undefined, { shallow: false });
+  };
+
   return (
-    <Layout>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-8">
-        <Image
-          className="dark:invert mb-8"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Welcome to Splash App
-        </h1>
-        <p className="text-lg text-gray-700 mb-8">
-          Your one-stop platform for all your needs.
-        </p>
-        <div className="flex gap-4">
-          <a
-            className="rounded-full bg-blue-500 hover:bg-blue-400 text-white text-sm sm:text-base px-6 py-2 transition"
-            href="https://nextjs.org/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our Docs
-          </a>
-          <a
-            className="rounded-full bg-gray-500 hover:bg-gray-400 text-white text-sm sm:text-base px-6 py-2 transition"
-            href="https://vercel.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Deploy Now
-          </a>
-        </div>
-      </div>
-    </Layout>
-  );
-};
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center text-center">
+      {/* Welcome Message */}
+      <h1 className="text-4xl font-bold text-gray-800 mb-4">
+        Welcome to Splash App!
+      </h1>
+      <p className="text-lg text-gray-600 mb-8">
+        Your one-stop platform for everything AI you need. Start exploring by
+        navigating to our features below.
+      </p>
 
-export default Home;
+      {/* Navigation Options */}
+      <div className="flex gap-6">
+        <Button
+          action={() => routeToNextPage({ pageRoute: "/generate-text-ai" })}
+          buttonLabel="Generate Text"
+          buttonBackgroundColor="blue"
+        />
+        <Button
+          action={() => routeToNextPage({ pageRoute: "/text-to-image" })}
+          buttonLabel="Text to Image"
+          buttonBackgroundColor="green"
+        />
+        <Button
+          action={() => routeToNextPage({ pageRoute: "/counter-app" })}
+          buttonLabel="Contact us"
+          buttonBackgroundColor="orange"
+        />
+      </div>
+    </div>
+  );
+}
